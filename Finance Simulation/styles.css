@@ -100,7 +100,7 @@ body {
     padding: 10px;
     font-size: 1.2rem; /* Adjust font size if needed */
     background: #ce0505;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     border: none;
     cursor: pointer;
 }
@@ -111,8 +111,8 @@ body {
     margin: 20px auto 0;
     padding: 10px;
     font-size: 1.2rem; /* Adjust font size if needed */
-    background: #fffb00;
-    color: rgb(0, 0, 0);
+    background: #c9c737;
+    color: rgb(255, 255, 255);
     border: none;
     cursor: pointer;
 }
