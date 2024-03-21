@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (validateTotal()) {
             updateMarketConditionAndModal();
             incrementYear();
+            updateCashBalance();
         }
     });
 
@@ -34,7 +35,7 @@ function validateTotal() {
 }
 
 function incrementYear() {
-    const currentYearElement = document.getElementById('currentYear'); // Ensure this ID matches your HTML element
+    const currentYearElement = document.getElementById('currentYear'); 
     let currentYearText = currentYearElement.innerText; // e.g., "0/40"
     let currentYear = parseInt(currentYearText.split('/')[0]); // Extract the current year number
 
@@ -54,6 +55,7 @@ function updateMarketConditionAndModal() {
     updateModalText(marketCondition);
 }
 
+/// the const randomNumber will be used for expected return calc as M
 function generateMarketCondition() {
     const randomNumber = Math.random();
     if (randomNumber < 0.4) return 'Bull';
@@ -62,7 +64,7 @@ function generateMarketCondition() {
 }
 
 function updateMarketConditionDisplay(marketCondition) {
-    const marketConditionElement = document.getElementById('marketCondition'); // Assuming the ID is 'marketCondition' for the market condition display element
+    const marketConditionElement = document.getElementById('marketCondition'); 
     marketConditionElement.innerText = marketCondition;
 }
 
@@ -74,4 +76,14 @@ function updateModalText(marketCondition) {
     };
     const text = predefinedTexts[marketCondition] || "Unpredictable market alert! Consider diversifying your portfolio.";
     document.getElementById('modalText').innerHTML = `<p>${text}</p>`;
+}
+
+function updateCashBalance() {
+    // Dummy implementation - Replace this logic with your actual cash balance update mechanism
+    var cashBalanceElement = document.getElementById('currentCashBalance');
+    var currentBalance = parseInt(cashBalanceElement.innerText.replace('$', '').replace(',', ''));
+    
+    // For demonstration, let's just add a fixed amount
+    var newBalance = currentBalance + 1000; // Example logic, rn use 1000
+    cashBalanceElement.innerText = `$${newBalance.toLocaleString()}`;
 }
