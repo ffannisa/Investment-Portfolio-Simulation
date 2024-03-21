@@ -93,6 +93,30 @@ body {
     white-space: nowrap; /* Ensures button text stays in one line */
 }
 
+.btn-risk {
+    display: block;
+    width: 200px;
+    margin: 20px auto 0;
+    padding: 10px;
+    font-size: 1.2rem; /* Adjust font size if needed */
+    background: #ce0505;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-norisk {
+    display: block;
+    width: 200px;
+    margin: 20px auto 0;
+    padding: 10px;
+    font-size: 1.2rem; /* Adjust font size if needed */
+    background: #fffb00;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+}
+
 .dashboard-overview {
     display: flex;
     flex-wrap: wrap;
