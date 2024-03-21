@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize modal text
     updateMarketConditionAndModal();
+
+    // Adjust input ranges based on risk preference
+    adjustInputRangesBasedOnRisk();
 });
 
 function validateInputValue() {
@@ -27,12 +30,23 @@ function validateTotal() {
     const inputs = document.querySelectorAll('.percentallocated .input-box');
     const total = Array.from(inputs).reduce((acc, input) => acc + Number(input.value || 0), 0);
 
+    let isWithinRange = true;
+    inputs.forEach(input => {
+        if (input.value < Number(input.min) || input.value > Number(input.max)) {
+            isWithinRange = false;
+        }
+    });
+
     if (total !== 100) {
         alert('The total allocation must equal 100. Currently, it is ' + total + '.');
+        return false;
+    } else if (!isWithinRange) {
+        alert('One or more inputs are outside the permitted range.');
         return false;
     }
     return true;
 }
+
 
 function incrementYear() {
     const currentYearElement = document.getElementById('currentYear'); 
@@ -48,7 +62,7 @@ function incrementYear() {
     }
 }
 
-
+/// generating randomised market condition as well as news headline
 function updateMarketConditionAndModal() {
     const marketCondition = generateMarketCondition();
     updateMarketConditionDisplay(marketCondition);
@@ -86,4 +100,42 @@ function updateCashBalance() {
     // For demonstration, let's just add a fixed amount
     var newBalance = currentBalance + 1000; // Example logic, rn use 1000
     cashBalanceElement.innerText = `$${newBalance.toLocaleString()}`;
+}
+
+/// function for percent allocation min-max range based on profile selection
+function adjustInputRangesBasedOnRisk() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const riskPreference = urlParams.get('risk');
+    
+    const highRiskRanges = [
+        { min: 0, max: 80 }, // Cash
+        { min: 20, max: 100 }, // Stock 1
+        { min: 10, max: 100 }, // Stock 2
+        { min: 0, max: 50 }, // SGS Bond
+        { min: 5, max: 100 }, // S&P 500 ETF
+        { min: 0, max: 70 } // Dogecoin
+    ];
+
+    const lowRiskRanges = [
+        { min: 0, max: 20 }, // Cash
+        { min: 0, max: 40 }, // Stock 1
+        { min: 0, max: 30 }, // Stock 2
+        { min: 10, max: 100 }, // SGS Bond
+        { min: 5, max: 50 }, // S&P 500 ETF
+        { min: 0, max: 15 } // Dogecoin
+    ];
+
+    const inputs = document.querySelectorAll('.percentallocated .input-box');
+    
+    if (riskPreference === 'high') {
+        inputs.forEach((input, index) => {
+            input.min = highRiskRanges[index].min;
+            input.max = highRiskRanges[index].max;
+        });
+    } else if (riskPreference === 'low') {
+        inputs.forEach((input, index) => {
+            input.min = lowRiskRanges[index].min;
+            input.max = lowRiskRanges[index].max;
+        });
+    }
 }

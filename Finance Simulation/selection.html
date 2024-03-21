@@ -21,21 +21,29 @@
       <div class="bg-white text-black p-6 rounded-lg shadow-lg">
         <img class="mb-4 img-300x200" src="images/high-risk.png" alt="Financial chart for portfolio 1">
         <p class="text-sm">
-          veraaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
-          vrwwwwwwwwwwwwwwwwwwww<br>
-          text text text text
+          High-Risk Allocation Constraints:<br>
+          - Cash: 0% to 80%<br>
+          - Stock 1: 20% to 100%<br>
+          - Stock 2: 10% to 100%<br>
+          - SGS Bond: 0% to 50%<br>
+          - S&P 500 ETF: 5% to 100%<br>
+          - Dogecoin: 0% to 70%<br>
         </p>
-        <button class="btn-risk" onclick="window.location.href='index.html'" >High-Risk Takers!</button>
+        <button class="btn-risk" id="btnHighRisk" onclick="window.location.href='index.html?risk=high'" >High-Risk Takers!</button>
       </div>
       <!-- Card 2 -->
       <div class="bg-white text-black p-6 rounded-lg shadow-lg">
         <img class="mb-4 img-300x200" src="images/safety.png" alt="Financial chart for portfolio 2">
         <p class="text-sm">
-          veraaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
-          vrwwwwwwwwwwwwwwwwwwww<br>
-          text text text text
+          Risk Averse Allocation Constraints:<br>
+          - Cash: 0% to 20%<br>
+          - Stock 1: 0% to 40%<br>
+          - Stock 2: 0% to 30%<br>
+          - SGS Bond: 10% to 100%<br>
+          - S&P 500 ETF: 5% to 50%<br>
+          - Dogecoin: 0% to 15%<br>
         </p>
-        <button class="btn-norisk" onclick="window.location.href='index.html'" >Risk Averse!</button>
+        <button class="btn-norisk" id="btnNoRisk" onclick="window.location.href='index.html?risk=low'" >Risk Averse!</button>
       </div>
     </div>
   </div>
