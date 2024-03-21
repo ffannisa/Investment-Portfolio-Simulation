@@ -189,23 +189,30 @@ body {
     cursor: pointer;
 }
 
-.graph-section {
-    width: 50%;
-    text-align: center;
-    padding-left: 20px;
-}
-
-canvas {
-    background: white;
-    color: black;
-    padding: 10px;
-    border-radius: 5px;
-}
-
 .input-section, .graph-section {
     display: inline-block;
     vertical-align: top;
     width: 49%; /* Adjust the width to less than 50% to ensure both sections fit in the same row */
+}
+
+.graph-section {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    text-align: center;
+    margin-right: 40px;
+}
+
+.my-chart {
+    background: white;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Adds space between the canvas elements */
+    width: 40%; /* Full width to stretch within the graph section */
+    height: auto; /* Height is auto to maintain aspect ratio */
 }
 
 .dashboard-container {

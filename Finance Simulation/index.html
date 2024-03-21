@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,7 +102,10 @@
 
     <!-- Graph Section -->
     <div class="graph-section">
-      <canvas id="myChart"></canvas>
+      <!-- First Graph Canvas -->
+      <canvas id="myChart" class="my-chart"></canvas>
+      <!-- Second Graph Canvas -->
+      <canvas id="mySecondChart" class="my-chart"></canvas>
   </div>
 </div>
   
@@ -127,8 +130,12 @@
     </div>
 
   <!-- Charting -->
+
+  <!-- Include Chart.js from a CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script>
+    // Initialization for the first graph
     const ctx = document.getElementById('myChart');
     new Chart(ctx, {
       type: 'line',
@@ -148,8 +155,32 @@
         }
       }
     });
-  </script>
 
+    // Initialization for the second graph
+    const ctx2 = document.getElementById('mySecondChart');
+    new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        datasets: [{
+          label: '# of Sales',
+          data: [14, 16, 7, 10, 5, 6],
+          borderWidth: 1,
+          borderColor: 'rgba(54, 162, 235, 1)', // Example border color
+          backgroundColor: 'rgba(54, 162, 235, 0.2)', // Example background color
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  
+<!-- Javascript File -->
 <script src="index.js"> charset="utf-8"</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
