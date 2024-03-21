@@ -10,6 +10,17 @@ body {
     padding: 20px;
 }
 
+.game-title {
+    font-family: 'Georgia', serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center; /* Centers the text inside the element */
+    margin: 0 auto; /* Centers the element itself within its parent container */
+    display: block; /* Ensures the element is treated as a block-level element */
+}
+
+
 .title {
     font-family: 'Georgia', serif;
     font-size: 24px;
