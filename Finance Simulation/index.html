@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,64 +16,61 @@
 
 </head>
 
-
 <body>
 <div class="dashboard-container">
-    <!-- Title Section -->
-    <div class="title">Investment Portfolio</div>
-
-    <!-- News and Overview Section -->
-    <div class="dashboard-overview">
+  <!-- Title Section -->
+  <div class="title">Investment Portfolio</div>
+  
+  <!-- News and Overview Section -->
+  <div class="dashboard-overview">
+    <div class="dashboard-overview d-flex justify-content-start flex-wrap">
+      <!-- Current Cash Balance -->
       <button type="button" class="news-button" data-bs-toggle="modal" data-bs-target="#exampleModal">News</button>
-      <div class="overview-items">
-          <div class="current-cash">Current Cash Balance: $100,000</div>
-          <div class="current-year">Current Year: 10/40</div>
-          <div class="market-condition">Market Condition: Bull</div>
-      </div>
-  </div>
-
-    <!-- <div class="dashboard-overview">
-      <button type="button" class="news-button" data-bs-toggle="modal" data-bs-target="#exampleModal">News</button>
-       Current Cash Balance -->
-      <!-- <div class="parameter-card">
-          <div class="card-body cash-balance">
-              <div class="card-content">
-                  <div class="card-text">
+      <div class="parameter-card card-custom">
+          <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center w-100">
+                  <div class="text-container">
                       <div class="parameter-title">Current Cash Balance</div>
                       <div class="parameter-value">$100,000</div>
                   </div>
-                  <div class="card-icon cash-icon"></div>
+                  <div class="icon-container">
+                      <i class="fas fa-dollar-sign icon-custom"></i>
+                  </div>
               </div>
           </div>
       </div>
-       -->
+      
       <!-- Current Year -->
-      <!-- <div class="parameter-card">
-          <div class="card-body current-year">
-              <div class="card-content">
-                  <div class="card-text">
+      <div class="parameter-card card-custom">
+          <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center w-100">
+                  <div class="text-container">
                       <div class="parameter-title">Current Year</div>
                       <div class="parameter-value">10/40</div>
                   </div>
-                  <div class="card-icon year-icon"></div>
+                  <div class="icon-container">
+                      <i class="fas fa-calendar-alt icon-custom"></i>
+                  </div>
               </div>
           </div>
       </div>
-       -->
+      
       <!-- Market Condition -->
-      <!-- <div class="parameter-card">
-          <div class="card-body market-condition">
-              <div class="card-content">
-                  <div class="card-text">
+      <div class="parameter-card card-custom">
+          <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center w-100">
+                  <div class="text-container">
                       <div class="parameter-title">Market Condition</div>
                       <div class="parameter-value">Bull</div>
                   </div>
-                  <div class="card-icon market-icon"></div>
+                  <div class="icon-container">
+                      <i class="fas fa-chart-line icon-custom"></i>
+                  </div>
               </div>
           </div>
       </div>
-  </div> -->
-
+  </div>
+  
     <!-- Input Parameters Section -->
     <div class="input-section">
       <div class="assets-and-allocation">
