@@ -63,11 +63,11 @@ function incrementYear() {
 }
 
 /// generating randomised market condition as well as news headline
-function updateMarketConditionAndModal() {
-    const marketCondition = generateMarketCondition();
-    updateMarketConditionDisplay(marketCondition);
-    updateModalText(marketCondition);
-}
+// function updateMarketConditionAndModal() {
+//     const marketCondition = generateMarketCondition();
+//     updateMarketConditionDisplay(marketCondition);
+//     updateModalText(marketCondition);
+// }
 
 /// the const randomNumber will be used for expected return calc as M
 function generateMarketCondition() {
@@ -92,15 +92,15 @@ function updateModalText(marketCondition) {
     document.getElementById('modalText').innerHTML = `<p>${text}</p>`;
 }
 
-function updateCashBalance() {
-    // Dummy implementation - Replace this logic with your actual cash balance update mechanism
-    var cashBalanceElement = document.getElementById('currentCashBalance');
-    var currentBalance = parseInt(cashBalanceElement.innerText.replace('$', '').replace(',', ''));
+// function updateCashBalance() {
+//     // Dummy implementation - Replace this logic with your actual cash balance update mechanism
+//     var cashBalanceElement = document.getElementById('currentCashBalance');
+//     var currentBalance = parseInt(cashBalanceElement.innerText.replace('$', '').replace(',', ''));
     
-    // For demonstration, let's just add a fixed amount
-    var newBalance = currentBalance + 1000; // Example logic, rn use 1000
-    cashBalanceElement.innerText = `$${newBalance.toLocaleString()}`;
-}
+//     // For demonstration, let's just add a fixed amount
+//     var newBalance = currentBalance + 1000; // Example logic, rn use 1000
+//     cashBalanceElement.innerText = `$${newBalance.toLocaleString()}`;
+// }
 
 /// function for percent allocation min-max range based on profile selection
 function adjustInputRangesBasedOnRisk() {
@@ -139,3 +139,184 @@ function adjustInputRangesBasedOnRisk() {
         });
     }
 }
+
+// Constants for alpha and beta values of each stock
+const stockParameters = {
+    'Stock 1': { alpha: -0.409, beta: 36.353 },
+    'Stock 2': { alpha: 0.524, beta: -16.895 },
+    'S&P 500 ETF': { alpha: 0.302, beta: -8.516 },
+    'SGS Bond': { alpha: -0.0198, beta: 3.0001 },
+    'Dogecoin': { alpha: 56.06, beta: -1281.893 }
+};
+
+// Expected returns for each stock, initially empty
+let expectedReturns = {
+    'Stock 1': [],
+    'Stock 2': [],
+    'S&P 500 ETF': [],
+    'SGS Bond': [],
+    'Dogecoin': []
+};
+
+// Extend the updateMarketConditionAndModal function to include expected return calculations
+function updateMarketConditionAndModal() {
+    const marketCondition = generateMarketCondition();
+    const M = Math.random(); // Reuse this value for expected return calculations
+    calculateExpectedReturns(M);
+    calculateCumulativeReturns(); // Calculate cumulative returns
+    updateMarketConditionDisplay(marketCondition);
+    updateModalText(marketCondition);
+    updateChart();
+}
+
+// Calculate expected returns for each stock
+function calculateExpectedReturns(M) {
+    Object.keys(stockParameters).forEach(stock => {
+        const { alpha, beta } = stockParameters[stock];
+        const expectedReturn = alpha + beta * M;
+        expectedReturns[stock].push(expectedReturn);
+    });
+}
+
+let cumulativeReturns = []; // To store cumulative returns for each year
+
+// Function to calculate cumulative expected returns
+// function calculateCumulativeReturns() {
+//     cumulativeReturns = []; // Reset for recalculation
+//     const numberOfYears = expectedReturns['Stock 1'].length; // Assuming all stocks have the same number of years calculated
+    
+//     for (let year = 0; year < numberOfYears; year++) {
+//         let cumulativeReturnForYear = 0;
+//         Object.keys(expectedReturns).forEach(stock => {
+//             const percentAllocated = document.querySelector(`input[name="${stock.toLowerCase().replace(/ /g, '-')}-allocated"]`).value / 100;
+//             const expectedReturn = expectedReturns[stock][year];
+//             cumulativeReturnForYear += percentAllocated * expectedReturn;
+//         });
+//         // Include cash balance calculation if necessary
+//         cumulativeReturns.push(cumulativeReturnForYear);
+//     }
+// }
+
+function calculateCumulativeReturns() {
+    cumulativeReturns = [];
+    const numberOfYears = expectedReturns['Stock 1'].length;
+    
+    for (let year = 0; year < numberOfYears; year++) {
+        let cumulativeReturnForYear = 0;
+        Object.keys(expectedReturns).forEach(stock => {
+            const inputSelector = `input[name="${stock.toLowerCase().replace(/ /g, '-')}-allocated"]`;
+            const inputElement = document.querySelector(inputSelector);
+            if (!inputElement) {
+                console.error("Input element not found for selector:", inputSelector);
+                return;
+            }
+            const percentAllocated = parseFloat(inputElement.value) / 100 || 0;
+            const expectedReturn = expectedReturns[stock][year];
+            
+            console.log(`Year ${year + 1}, Stock: ${stock}, Percent Allocated: ${percentAllocated}, Expected Return: ${expectedReturn}`);
+            
+            cumulativeReturnForYear += percentAllocated * expectedReturn;
+        });
+        
+        cumulativeReturns.push(cumulativeReturnForYear);
+    }
+    
+    console.log("Cumulative Returns:", cumulativeReturns);
+}
+
+function calculateCashReturns() {
+    const cashAllocationPercentage = parseFloat(document.querySelector('input[name="cash-allocated"]').value) / 100 || 0;
+    const previousCashBalance = parseInt(document.getElementById('currentCashBalance').innerText.replace('$', '').replace(',', ''));
+
+    let cashReturns = 0;
+    cumulativeReturns.forEach((cumulativeReturn, index) => {
+        const expectedReturnInDollars = cumulativeReturn * cashAllocationPercentage * previousCashBalance;
+        cashReturns += expectedReturnInDollars;
+    });
+
+    return cashReturns;
+}
+
+function updateCashBalance() {
+    // Dummy implementation - Replace this logic with your actual cash balance update mechanism
+    const cashBalanceElement = document.getElementById('currentCashBalance');
+    let currentBalance = parseInt(cashBalanceElement.innerText.replace('$', '').replace(',', ''));
+
+    // Calculate cash returns
+    const cashReturns = calculateCashReturns();
+
+    // Update cash balance
+    const newBalance = currentBalance + cashReturns;
+    cashBalanceElement.innerText = `$${newBalance.toLocaleString()}`;
+}
+
+
+
+// Initialization of the charts moved to a function for dynamic updates
+let myChart;
+let mySecondChart;
+
+function initializeCharts() {
+    const ctx = document.getElementById('myChart');
+    myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [], // Labels will be years
+            datasets: Object.keys(expectedReturns).map(stock => ({
+                label: stock,
+                data: [],
+                borderWidth: 1
+            }))
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Initialize the second chart for cumulative expected returns
+    const ctx2 = document.getElementById('mySecondChart');
+    mySecondChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: [], // Will be updated with years as for the first chart
+            datasets: [{
+                label: 'Cumulative Expected Return',
+                data: [], // Will be updated dynamically
+                borderWidth: 1,
+                borderColor: 'rgb(75, 192, 192)', // Example styling
+                backgroundColor: 'rgba(75, 192, 192, 0.2)' // Example styling
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+function updateChart() {
+    console.log("Cumulative Returns:", cumulativeReturns); // Add this line for debugging
+    myChart.data.labels = expectedReturns['Stock 1'].map((_, index) => `Year ${index + 1}`);
+    myChart.data.datasets.forEach(dataset => {
+        dataset.data = expectedReturns[dataset.label];
+    });
+    myChart.update();
+
+    mySecondChart.data.labels = cumulativeReturns.map((_, index) => `Year ${index + 1}`);
+    mySecondChart.data.datasets[0].data = cumulativeReturns;
+    console.log("Second Chart Data:", mySecondChart.data.datasets[0].data); // Add this line for debugging
+    mySecondChart.update();
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Other initialization code
+    initializeCharts(); // Call this function to initialize the chart on document load
+});
