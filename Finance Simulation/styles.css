@@ -1,0 +1,314 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #2c3e50;
+    color: white;
+}
+
+.dashboard-container {
+    padding: 20px;
+}
+
+.game-title {
+    font-family: 'Georgia', serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center; /* Centers the text inside the element */
+    margin: 0 auto; /* Centers the element itself within its parent container */
+    display: block; /* Ensures the element is treated as a block-level element */
+}
+
+
+.title {
+    font-family: 'Georgia', serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.dashboard-overview {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%; 
+    gap: 10px; 
+}
+
+.news-button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 40px 50px; /* Increased padding for a bigger button */
+    font-size: 1.3rem; /* Adjust font size if needed */
+    cursor: pointer;
+    margin-right: 20px; /* Add margin to the right of the News button */
+    margin-top: 10px;
+}
+
+.card-custom {
+    display: flex;
+    flex-grow: 1; /* Card expands to fill the horizontal space */
+    align-items: center; /* Centers content vertically */
+    padding: 10px; /* Reduced padding to decrease height */
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background: #34495e;
+    color: white;
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-between; /* Pushes the text and icon apart */
+    align-items: center;
+    width: 100%;
+}
+
+.text-container {
+    flex-grow: 1; /* Allows text container to grow and fill the space */
+    min-width: 0; /* Allows text container to shrink if needed */
+}
+
+.parameter-title, .parameter-value {
+    white-space: nowrap; /* Prevents wrapping */
+    overflow: hidden; /* Prevents overflow */
+    text-overflow: ellipsis; /* Adds ellipsis for overflowing text */
+    margin-bottom: 0; /* Removes bottom margin */
+}
+
+.icon-container {
+    padding-left: 10px; /* Adds space between text and icon */
+    flex-shrink: 0; /* Prevents icon container from shrinking */
+}
+
+.icon-custom {
+    font-size: 1.5rem; /* Icon size */
+    color: #adb5bd;
+}
+
+.news-button {
+    flex: 0 0 auto; /* Button doesn't grow but can shrink */
+    margin-right: 10px; /* Ensures space on the right */
+    white-space: nowrap; /* Ensures button text stays in one line */
+}
+
+.btn-risk {
+    display: block;
+    width: 200px;
+    margin: 20px auto 0;
+    padding: 10px;
+    font-size: 1.2rem; /* Adjust font size if needed */
+    background: #ce0505;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-norisk {
+    display: block;
+    width: 200px;
+    margin: 20px auto 0;
+    padding: 10px;
+    font-size: 1.2rem; /* Adjust font size if needed */
+    background: #c9c737;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+}
+
+.dashboard-overview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Provides spacing between cards and the News button */
+    align-items: flex-start; /* Aligns items at the start of the flex container */
+}
+
+.card-custom {
+    background: #34495e;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px; /* Adjust padding to ensure content fits well */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    flex: 0 1 auto; /* Allows the card to grow based on its content */
+}
+
+.news-button {
+    padding: 8px 12px; /* Adjust padding for better spacing */
+    margin-right: 10px; /* Ensures it doesn't look squashed next to cards */
+    white-space: nowrap; /* Prevents the text from wrapping */
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Ensures the card body fills the card */
+}
+
+.text-container {
+    flex-grow: 1; /* Allows text container to grow and take available space */
+}
+
+.parameter-title, .parameter-value {
+    white-space: nowrap; /* Keeps content on a single line */
+}
+
+.icon-container {
+    /* Adjusts to prevent the icon from overflowing */
+    padding-left: 10px; /* Space between text and icon */
+    flex-shrink: 0; /* Prevents the icon container from shrinking */
+}
+
+.icon-custom {
+    font-size: 1.5rem;
+    color: #adb5bd;
+}
+
+.parameter-card {
+    flex: 1; /* Allows cards to grow to fit content */
+    min-width: 160px; /* Sets a minimum width for smaller screens */
+}
+
+
+.input-section, .graph-section {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.input-section {
+    width: 50%;
+}
+
+
+.perallocated{
+    width: 500px;
+}
+
+.assets-and-allocation {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* This will allow the children to wrap onto the next line */
+    align-items: flex-start; /* Aligns children at the start of the cross axis */
+    width: 100%; /* Ensures it takes the full width */
+}
+
+.asset1, .perallocated {
+    flex: 1; /* Allows both children to grow and take up available space */
+    min-width: 250px; /* Set a minimum width for each child to ensure they don't become too small */
+    max-width: 400px;
+}
+
+/* try to implement similarly like previously */
+.simulate-button {
+    display: block;
+    width: 100px;
+    margin: 20px auto 0;
+    padding: 10px;
+    font-size: 1.3rem; /* Adjust font size if needed */
+    background: #2ecc71;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.input-section, .graph-section {
+    display: inline-block;
+    vertical-align: top;
+    width: 49%; /* Adjust the width to less than 50% to ensure both sections fit in the same row */
+}
+
+.graph-section {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    text-align: center;
+    margin-right: 40px;
+}
+
+.my-chart {
+    background: white;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Adds space between the canvas elements */
+    width: 40%; /* Full width to stretch within the graph section */
+    height: auto; /* Height is auto to maintain aspect ratio */
+}
+
+.dashboard-container {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    align-content: center; 
+    flex-wrap: wrap;
+}
+
+.balance, .risk-profile{
+    background: #34495e;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center; 
+}
+
+.portfolio, .performance, .returns, .profits {
+    background: #34495e;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center; 
+}
+
+.asset > div {
+    background: #34495e;
+    padding: 10px;
+    border: 1px solid #34495e; /* Adds a border to the input box */
+    border-radius: 5px; /* Rounds the corners of the input box */
+    margin: 5px 0;
+    text-align: center; 
+}
+
+.percentallocated .input-box {
+    width: 100%; /* Makes the input box take up the full width of its container */
+    padding: 7.5px; /* Adds some padding inside the input box */
+    margin: 5px 0; /* Adds some margin between the input boxes */
+    border: 1px solid #34495e; /* Adds a border to the input box */
+    border-radius: 5px; /* Rounds the corners of the input box */
+    background-color: #34495e; /* Sets the background color of the input box */
+    color: white; /* Sets the text color inside the input box */
+    text-align: center; /* Centers the text inside the input box */
+}
+
+.chart {
+    background: #8e44ad;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    /* Add more styles for the chart appearance */
+}
+
+.custom-button-size {
+    width: 150px;
+    height: 50px;
+    font-size: 16px;
+}
+
+.modal-body{
+    color: black;
+}
+
+
+.img-300x200 {
+    width: 300px;
+    height: 200px;
+  }
+  
