@@ -62,13 +62,6 @@ function incrementYear() {
     }
 }
 
-/// generating randomised market condition as well as news headline
-// function updateMarketConditionAndModal() {
-//     const marketCondition = generateMarketCondition();
-//     updateMarketConditionDisplay(marketCondition);
-//     updateModalText(marketCondition);
-// }
-
 /// the const randomNumber will be used for expected return calc as M
 function generateMarketCondition() {
     const randomNumber = Math.random();
@@ -91,16 +84,6 @@ function updateModalText(marketCondition) {
     const text = predefinedTexts[marketCondition] || "Unpredictable market alert! Consider diversifying your portfolio.";
     document.getElementById('modalText').innerHTML = `<p>${text}</p>`;
 }
-
-// function updateCashBalance() {
-//     // Dummy implementation - Replace this logic with your actual cash balance update mechanism
-//     var cashBalanceElement = document.getElementById('currentCashBalance');
-//     var currentBalance = parseInt(cashBalanceElement.innerText.replace('$', '').replace(',', ''));
-    
-//     // For demonstration, let's just add a fixed amount
-//     var newBalance = currentBalance + 1000; // Example logic, rn use 1000
-//     cashBalanceElement.innerText = `$${newBalance.toLocaleString()}`;
-// }
 
 /// function for percent allocation min-max range based on profile selection
 function adjustInputRangesBasedOnRisk() {
