@@ -123,11 +123,11 @@ function adjustInputRangesBasedOnRisk() {
 
 // Constants for alpha and beta values of each stock
 const stockParameters = {
-    'Nvidia': { alpha: -0.409, beta: 36.353 },
-    'Coca cola': { alpha: 0.524, beta: -16.895 },
-    'S&P 500 ETF': { alpha: 0.302, beta: -8.516 },
-    'T Bond': { alpha: -0.0198, beta: 3.0001 },
-    'Bitcoin': { alpha: 56.06, beta: -1281.893 }
+    'Nvidia': { alpha: 0.64, beta: -3.29, var:0.712 },
+    'Coca cola': { alpha: 0.108, beta: -2.21, var:0.016 },
+    'S&P 500 ETF': { alpha: 0.188, beta: -3.012, var:0.0257 },
+    'T Bond': { alpha: 0.044, beta: -0.462, var: 0.0082 },
+    'Bitcoin': { alpha: 22.683, beta: -341.953, var: 809.17 }
 };
 
 // Expected returns for each stock, initially empty
@@ -145,16 +145,27 @@ function updateMarketConditionAndModal() {
     const M = Math.random(); // Reuse this value for expected return calculations
     calculateExpectedReturns(M);
     calculateCumulativeReturns(); // Calculate cumulative returns
+    calculateSP500Returns();
     updateMarketConditionDisplay(marketCondition);
     updateModalText(marketCondition);
     updateChart();
 }
 
+// Utility function to generate random numbers with a normal distribution, The Box-Muller transform
+// In finance, asset returns are often modeled as normally distributed, due to the Central Limit Theorem
+function normalRandom() {
+    let u = 0, v = 0;
+    while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+    while (v === 0) v = Math.random();
+    return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+}
+
 // Calculate expected returns for each stock
 function calculateExpectedReturns(M) {
     Object.keys(stockParameters).forEach(stock => {
-        const { alpha, beta } = stockParameters[stock];
-        const expectedReturn = alpha + beta * M;
+        const { alpha, beta, var: variance } = stockParameters[stock];
+        const randomComponent = Math.sqrt(variance) * normalRandom();
+        const expectedReturn = alpha + beta * M + randomComponent;
         expectedReturns[stock].push(expectedReturn);
     });
 }
@@ -220,7 +231,16 @@ function updateCashBalance() {
 
 }
 
+let sp500CumulativeReturns = [];
 
+// New function to calculate S&P 500 ETF returns based on its allocation
+function calculateSP500Returns() {
+    const sp500Returns = expectedReturns['S&P 500 ETF'];
+    const inputSelector = 'input[name="s&p-500-etf-allocated"]'; // Adjust the name based on your actual input naming convention
+    const inputElement = document.querySelector(inputSelector);
+    const percentAllocated = parseFloat(inputElement.value) / 100 || 0;
+    sp500CumulativeReturns = sp500Returns.map(returnValue => returnValue * percentAllocated);
+}
 
 // Initialization of the charts moved to a function for dynamic updates
 let myChart;
@@ -247,20 +267,29 @@ function initializeCharts() {
             }
         }
     });
-
-    // Initialize the second chart for cumulative expected returns
+    
+    // Initialize the second chart for cumulative expected returns and S&P 500 comparison
     const ctx2 = document.getElementById('mySecondChart');
     mySecondChart = new Chart(ctx2, {
         type: 'line',
         data: {
             labels: [], // Will be updated with years as for the first chart
-            datasets: [{
-                label: 'Cumulative Expected Return',
-                data: [], // Will be updated dynamically
-                borderWidth: 1,
-                borderColor: 'rgb(75, 192, 192)', // Example styling
-                backgroundColor: 'rgba(75, 192, 192, 0.2)' // Example styling
-            }]
+            datasets: [
+                {
+                    label: 'Cumulative Expected Return',
+                    data: [], // Will be updated dynamically
+                    borderWidth: 1,
+                    borderColor: 'rgb(75, 192, 192)', // Example styling
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)' // Example styling
+                },
+                {
+                    label: 'S&P 500 Returns',
+                    data: [], // Will be updated with S&P 500 returns
+                    borderWidth: 1,
+                    borderColor: 'rgb(255, 99, 132)', // Different styling for distinction
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)'
+                }
+            ]
         },
         options: {
             scales: {
@@ -305,7 +334,9 @@ function updateChart() {
 
     mySecondChart.data.labels = cumulativeReturns.map((_, index) => `Year ${index + 1}`);
     mySecondChart.data.datasets[0].data = cumulativeReturns;
-    console.log("Second Chart Data:", mySecondChart.data.datasets[0].data); // Add this line for debugging
+    mySecondChart.data.datasets[1].data = sp500CumulativeReturns;
+    console.log("Cumulative Returns:", mySecondChart.data.datasets[0].data); // Add this line for debugging
+    console.log("S&P 500 Cumulative Returns:", sp500CumulativeReturns);
     mySecondChart.update();
 
     myThirdChart.data.labels = yearlyCashBalances.map((_, index) => `Year ${index + 1}`);
