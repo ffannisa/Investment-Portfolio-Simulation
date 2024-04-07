@@ -201,6 +201,8 @@ function calculateCashReturns() {
     return cashReturns;
 }
 
+let yearlyCashBalances = [];
+
 function updateCashBalance() {
     // Dummy implementation - Replace this logic with your actual cash balance update mechanism
     const cashBalanceElement = document.getElementById('currentCashBalance');
@@ -211,7 +213,11 @@ function updateCashBalance() {
 
     // Update cash balance
     const newBalance = currentBalance + cashReturns;
+    yearlyCashBalances.push(newBalance); 
     cashBalanceElement.innerText = `$${newBalance.toLocaleString()}`;
+
+    updateChart();
+
 }
 
 
@@ -219,6 +225,7 @@ function updateCashBalance() {
 // Initialization of the charts moved to a function for dynamic updates
 let myChart;
 let mySecondChart;
+let myThirdChart;
 
 function initializeCharts() {
     const ctx = document.getElementById('myChart');
@@ -263,6 +270,29 @@ function initializeCharts() {
             }
         }
     });
+
+    // Initialize the third chart for yearly cash balance
+    const ctx3 = document.getElementById('myThirdChart');
+    myThirdChart = new Chart(ctx3, {
+        type: 'bar', // Use a bar chart for the cash balance
+        data: {
+            labels: [], // Will be updated with years
+            datasets: [{
+                label: 'Yearly Cash Balance',
+                data: [], // Will be updated dynamically
+                backgroundColor: 'rgba(153, 102, 255, 0.2)', // Example styling
+                borderColor: 'rgba(153, 102, 255, 1)', // Example styling
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
 
 function updateChart() {
@@ -277,6 +307,10 @@ function updateChart() {
     mySecondChart.data.datasets[0].data = cumulativeReturns;
     console.log("Second Chart Data:", mySecondChart.data.datasets[0].data); // Add this line for debugging
     mySecondChart.update();
+
+    myThirdChart.data.labels = yearlyCashBalances.map((_, index) => `Year ${index + 1}`);
+    myThirdChart.data.datasets[0].data = yearlyCashBalances;
+    myThirdChart.update();
 }
 
 
