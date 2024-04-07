@@ -91,19 +91,19 @@ function adjustInputRangesBasedOnRisk() {
     const riskPreference = urlParams.get('risk');
     
     const highRiskRanges = [
-        { min: 20, max: 100 }, // Stock 1
-        { min: 10, max: 100 }, // Stock 2
-        { min: 0, max: 50 }, // SGS Bond
+        { min: 20, max: 100 }, // Nvidia
+        { min: 10, max: 100 }, // Coca cola
+        { min: 0, max: 50 }, // T Bond
         { min: 5, max: 100 }, // S&P 500 ETF
-        { min: 0, max: 70 } // Dogecoin
+        { min: 0, max: 70 } // Bitcoin
     ];
 
     const lowRiskRanges = [
-        { min: 5, max: 15 }, // Stock 1
-        { min: 5, max: 25 }, // Stock 2
-        { min: 5, max: 15 }, // SGS Bond
-        { min: 40, max: 95 }, // S&P 500 ETF
-        { min: 0, max: 5 } // Dogecoin
+        { min: 5, max: 15 }, // Nvidia
+        { min: 5, max: 25 }, // Coca cola
+        { min: 40, max: 95 }, // T Bond
+        { min: 5, max: 15 }, // S&P 500 ETF
+        { min: 0, max: 5 } // Bitcoin
     ];
 
     const inputs = document.querySelectorAll('.percentallocated .input-box');
@@ -123,20 +123,20 @@ function adjustInputRangesBasedOnRisk() {
 
 // Constants for alpha and beta values of each stock
 const stockParameters = {
-    'Stock 1': { alpha: -0.409, beta: 36.353 },
-    'Stock 2': { alpha: 0.524, beta: -16.895 },
+    'Nvidia': { alpha: -0.409, beta: 36.353 },
+    'Coca cola': { alpha: 0.524, beta: -16.895 },
     'S&P 500 ETF': { alpha: 0.302, beta: -8.516 },
-    'SGS Bond': { alpha: -0.0198, beta: 3.0001 },
-    'Dogecoin': { alpha: 56.06, beta: -1281.893 }
+    'T Bond': { alpha: -0.0198, beta: 3.0001 },
+    'Bitcoin': { alpha: 56.06, beta: -1281.893 }
 };
 
 // Expected returns for each stock, initially empty
 let expectedReturns = {
-    'Stock 1': [],
-    'Stock 2': [],
+    'Nvidia': [],
+    'Coca cola': [],
     'S&P 500 ETF': [],
-    'SGS Bond': [],
-    'Dogecoin': []
+    'T Bond': [],
+    'Bitcoin': []
 };
 
 // Extend the updateMarketConditionAndModal function to include expected return calculations
@@ -163,7 +163,7 @@ let cumulativeReturns = []; // To store cumulative returns for each year
 
 function calculateCumulativeReturns() {
     cumulativeReturns = [];
-    const numberOfYears = expectedReturns['Stock 1'].length;
+    const numberOfYears = expectedReturns['Nvidia'].length;
     
     for (let year = 0; year < numberOfYears; year++) {
         let cumulativeReturnForYear = 0;
@@ -267,7 +267,7 @@ function initializeCharts() {
 
 function updateChart() {
     console.log("Cumulative Returns:", cumulativeReturns); // Add this line for debugging
-    myChart.data.labels = expectedReturns['Stock 1'].map((_, index) => `Year ${index + 1}`);
+    myChart.data.labels = expectedReturns['Nvidia'].map((_, index) => `Year ${index + 1}`);
     myChart.data.datasets.forEach(dataset => {
         dataset.data = expectedReturns[dataset.label];
     });
