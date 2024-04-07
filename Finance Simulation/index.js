@@ -108,7 +108,6 @@ function adjustInputRangesBasedOnRisk() {
     const riskPreference = urlParams.get('risk');
     
     const highRiskRanges = [
-        { min: 0, max: 80 }, // Cash
         { min: 20, max: 100 }, // Stock 1
         { min: 10, max: 100 }, // Stock 2
         { min: 0, max: 50 }, // SGS Bond
@@ -117,7 +116,6 @@ function adjustInputRangesBasedOnRisk() {
     ];
 
     const lowRiskRanges = [
-        { min: 0, max: 20 }, // Cash
         { min: 0, max: 40 }, // Stock 1
         { min: 0, max: 30 }, // Stock 2
         { min: 10, max: 100 }, // SGS Bond
@@ -180,23 +178,6 @@ function calculateExpectedReturns(M) {
 
 let cumulativeReturns = []; // To store cumulative returns for each year
 
-// Function to calculate cumulative expected returns
-// function calculateCumulativeReturns() {
-//     cumulativeReturns = []; // Reset for recalculation
-//     const numberOfYears = expectedReturns['Stock 1'].length; // Assuming all stocks have the same number of years calculated
-    
-//     for (let year = 0; year < numberOfYears; year++) {
-//         let cumulativeReturnForYear = 0;
-//         Object.keys(expectedReturns).forEach(stock => {
-//             const percentAllocated = document.querySelector(`input[name="${stock.toLowerCase().replace(/ /g, '-')}-allocated"]`).value / 100;
-//             const expectedReturn = expectedReturns[stock][year];
-//             cumulativeReturnForYear += percentAllocated * expectedReturn;
-//         });
-//         // Include cash balance calculation if necessary
-//         cumulativeReturns.push(cumulativeReturnForYear);
-//     }
-// }
-
 function calculateCumulativeReturns() {
     cumulativeReturns = [];
     const numberOfYears = expectedReturns['Stock 1'].length;
@@ -225,12 +206,12 @@ function calculateCumulativeReturns() {
 }
 
 function calculateCashReturns() {
-    const cashAllocationPercentage = parseFloat(document.querySelector('input[name="cash-allocated"]').value) / 100 || 0;
+    // const cashAllocationPercentage = parseFloat(document.querySelector('input[name="cash-allocated"]').value) / 100 || 0;
     const previousCashBalance = parseInt(document.getElementById('currentCashBalance').innerText.replace('$', '').replace(',', ''));
 
     let cashReturns = 0;
     cumulativeReturns.forEach((cumulativeReturn, index) => {
-        const expectedReturnInDollars = cumulativeReturn * cashAllocationPercentage * previousCashBalance;
+        const expectedReturnInDollars = cumulativeReturn * previousCashBalance;
         cashReturns += expectedReturnInDollars;
     });
 
