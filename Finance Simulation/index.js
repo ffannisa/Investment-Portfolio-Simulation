@@ -99,11 +99,11 @@ function adjustInputRangesBasedOnRisk() {
     ];
 
     const lowRiskRanges = [
-        { min: 0, max: 40 }, // Stock 1
-        { min: 0, max: 30 }, // Stock 2
-        { min: 10, max: 100 }, // SGS Bond
-        { min: 5, max: 50 }, // S&P 500 ETF
-        { min: 0, max: 15 } // Dogecoin
+        { min: 5, max: 15 }, // Stock 1
+        { min: 5, max: 25 }, // Stock 2
+        { min: 5, max: 15 }, // SGS Bond
+        { min: 40, max: 95 }, // S&P 500 ETF
+        { min: 0, max: 5 } // Dogecoin
     ];
 
     const inputs = document.querySelectorAll('.percentallocated .input-box');
