@@ -100,6 +100,11 @@ function generateMarketCondition() {
 let usedNewsIndices = new Set(); // Tracks indices of newsHeadlines that have been used
 
 function SelectionNews(year) {
+    // If all news headlines have been used, return null; this is because of error year stop at 31
+    if (usedNewsIndices.size >= newsHeadlines.length) {
+        return null;
+    }
+
     if (year % 2 === 0) { // Every even year
         let randomIndex;
         do {
@@ -109,8 +114,9 @@ function SelectionNews(year) {
         usedNewsIndices.add(randomIndex);
         return newsHeadlines[randomIndex];
     }
-    return null; // No news for odd years
+    return null; // No news for odd years or if all news have been used
 }
+
 
 function calculateStockRate(stockCondition) {
     switch(stockCondition) {
