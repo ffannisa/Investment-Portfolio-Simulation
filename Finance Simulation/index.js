@@ -63,16 +63,17 @@ function incrementYear() {
 }
 
 /// the const randomNumber will be used for expected return calc as M
+/// Math.random give randomized value 0 to 1, so must multiply with number to customize
 function generateMarketCondition() {
     const randomNumber = Math.random();
-    if (randomNumber < 0.4) return 'Bull';
-    else if (randomNumber < 0.7) return 'Bear';
-    else return 'Neutral';
+    if (randomNumber < 0.4) return { condition: 'Bull', M: Math.random() * (2 - 0.2) + 0.2 };
+    else if (randomNumber < 0.7) return { condition: 'Bear', M: Math.random() * (6.5 - 4) + 4 };
+    else return { condition: 'Neutral', M: Math.random() * (4 - 2) + 2 };
 }
 
 function updateMarketConditionDisplay(marketCondition) {
     const marketConditionElement = document.getElementById('marketCondition'); 
-    marketConditionElement.innerText = marketCondition;
+    marketConditionElement.innerText = marketCondition.condition;
 }
 
 function updateModalText(marketCondition) {
@@ -81,7 +82,7 @@ function updateModalText(marketCondition) {
         'Bear': "Caution: Market trends indicate a potential downturn.",
         'Neutral': "Stable market conditions. Proceed with planned investments."
     };
-    const text = predefinedTexts[marketCondition] || "Unpredictable market alert! Consider diversifying your portfolio.";
+    const text = predefinedTexts[marketCondition.condition] || "Unpredictable market alert! Consider diversifying your portfolio.";
     document.getElementById('modalText').innerHTML = `<p>${text}</p>`;
 }
 
@@ -165,7 +166,7 @@ function calculateExpectedReturns(M) {
     Object.keys(stockParameters).forEach(stock => {
         const { alpha, beta, var: variance } = stockParameters[stock];
         const randomComponent = Math.sqrt(variance) * normalRandom();
-        const expectedReturn = alpha + beta * M + randomComponent;
+        const expectedReturn = alpha + beta * (0.01*M) + randomComponent;
         expectedReturns[stock].push(expectedReturn);
     });
 }
