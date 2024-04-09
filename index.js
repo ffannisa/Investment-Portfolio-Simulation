@@ -234,6 +234,12 @@ function calculateExpectedReturns(M, selectedNews) {
             modifiedM += stockRate; // Modify M based on the stock condition from the news
         }
         const expectedReturn = alpha + beta * (0.01 * modifiedM) + randomComponent;
+
+        // Check if the expected return is less than -2, change it to -0.99
+        if (expectedReturn < -0.99) {
+            expectedReturn = -0.99;
+        }
+
         expectedReturns[stock].push(expectedReturn);
     });
 }
