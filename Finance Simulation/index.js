@@ -91,18 +91,18 @@ function adjustInputRangesBasedOnRisk() {
     const riskPreference = urlParams.get('risk');
     
     const highRiskRanges = [
-        { min: 20, max: 100 }, // Nvidia
-        { min: 10, max: 100 }, // Coca cola
-        { min: 0, max: 50 }, // T Bond
-        { min: 5, max: 100 }, // S&P 500 ETF
-        { min: 0, max: 70 } // Bitcoin
+        { min: 5, max: 35 }, // Nvidia
+        { min: 5, max: 35 }, // Coca cola
+        { min: 20, max: 40 }, // T Bond
+        { min: 5, max: 35 }, // S&P 500 ETF
+        { min: 5, max: 15 } // Bitcoin
     ];
 
     const lowRiskRanges = [
-        { min: 5, max: 15 }, // Nvidia
-        { min: 5, max: 25 }, // Coca cola
-        { min: 40, max: 95 }, // T Bond
-        { min: 5, max: 15 }, // S&P 500 ETF
+        { min: 0, max: 20 }, // Nvidia
+        { min: 5, max: 20 }, // Coca cola
+        { min: 40, max: 90 }, // T Bond
+        { min: 0, max: 20 }, // S&P 500 ETF
         { min: 0, max: 5 } // Bitcoin
     ];
 
