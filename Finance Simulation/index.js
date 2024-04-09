@@ -29,14 +29,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const simulateButton = document.getElementById('simulateButton');
     simulateButton.addEventListener('click', function() {
         if (validateTotal()) {
-            updateMarketConditionAndModal();
+            const currentYearElement = document.getElementById('currentYear');
+            let currentYearText = currentYearElement.innerText; 
+            let currentYear = parseInt(currentYearText.split('/')[0]) + 1; // Extract the current year number
+    
+            updateMarketConditionAndModal(currentYear);
             incrementYear();
             updateCashBalance();
         }
     });
 
     // Initialize modal text
-    updateMarketConditionAndModal();
+    // updateMarketConditionAndModal();
 
     // Adjust input ranges based on risk preference
     adjustInputRangesBasedOnRisk();
@@ -93,20 +97,56 @@ function generateMarketCondition() {
     else return { condition: 'Neutral', M: Math.random() * (4 - 2) + 2 };
 }
 
-function updateMarketConditionDisplay(marketCondition) {
-    const marketConditionElement = document.getElementById('marketCondition'); 
-    marketConditionElement.innerText = marketCondition.condition;
+let usedNewsIndices = new Set(); // Tracks indices of newsHeadlines that have been used
+
+function SelectionNews(year) {
+    if (year % 2 === 0) { // Every even year
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * newsHeadlines.length);
+        } while (usedNewsIndices.has(randomIndex)); // Ensure the news is unique
+        
+        usedNewsIndices.add(randomIndex);
+        return newsHeadlines[randomIndex];
+    }
+    return null; // No news for odd years
 }
 
-function updateModalText(marketCondition) {
+function calculateStockRate(stockCondition) {
+    switch(stockCondition) {
+        case 'Bull':
+            return 0.05;
+        case 'Bear':
+            return -0.05;
+        case 'Neutral':
+            return Math.random() * (0.025 - (-0.025)) + (-0.025); // Uniform random value between -0.025 and 0.025
+        default:
+            return 0; // Default case, if no condition matches
+    }
+}
+
+function updateMarketConditionDisplay(marketCondition, selectedNews) {
+    const marketConditionElement = document.getElementById('marketCondition'); 
+    let displayText = marketCondition.condition;
+    if (selectedNews) {
+        displayText += `<br>News: ${selectedNews.News}`;
+    }
+    marketConditionElement.innerHTML = displayText;
+}
+
+function updateModalText(marketCondition, selectedNews) {
     const predefinedTexts = {
         'Bull': "Market is looking up! Great time to invest.",
         'Bear': "Caution: Market trends indicate a potential downturn.",
         'Neutral': "Stable market conditions. Proceed with planned investments."
     };
-    const text = predefinedTexts[marketCondition.condition] || "Unpredictable market alert! Consider diversifying your portfolio.";
+    let text = predefinedTexts[marketCondition.condition] || "Unpredictable market alert! Consider diversifying your portfolio.";
+    if (selectedNews) {
+        text += `<br>News: ${selectedNews.News}`;
+    }
     document.getElementById('modalText').innerHTML = `<p>${text}</p>`;
 }
+
 
 /// function for percent allocation min-max range based on profile selection
 function adjustInputRangesBasedOnRisk() {
@@ -162,15 +202,16 @@ let expectedReturns = {
     'Bitcoin': []
 };
 
-// Extend the updateMarketConditionAndModal function to include expected return calculations
-function updateMarketConditionAndModal() {
+
+function updateMarketConditionAndModal(year) {
     const marketCondition = generateMarketCondition();
+    const selectedNews = SelectionNews(year);
     const M = Math.random(); // Reuse this value for expected return calculations
-    calculateExpectedReturns(M);
+    calculateExpectedReturns(M, selectedNews);
     calculateCumulativeReturns(); // Calculate cumulative returns
     calculateSP500Returns();
-    updateMarketConditionDisplay(marketCondition);
-    updateModalText(marketCondition);
+    updateMarketConditionDisplay(marketCondition, selectedNews);
+    updateModalText(marketCondition, selectedNews);
     updateChart();
 }
 
@@ -183,15 +224,20 @@ function normalRandom() {
     return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
 }
 
-// Calculate expected returns for each stock
-function calculateExpectedReturns(M) {
+function calculateExpectedReturns(M, selectedNews) {
+    const stockRate = selectedNews ? calculateStockRate(selectedNews.StockCondition) : 0;
     Object.keys(stockParameters).forEach(stock => {
         const { alpha, beta, var: variance } = stockParameters[stock];
         const randomComponent = Math.sqrt(variance) * normalRandom();
-        const expectedReturn = alpha + beta * (0.01*M) + randomComponent;
+        let modifiedM = M;
+        if (selectedNews && selectedNews.Stock === stock) {
+            modifiedM += stockRate; // Modify M based on the stock condition from the news
+        }
+        const expectedReturn = alpha + beta * (0.01 * modifiedM) + randomComponent;
         expectedReturns[stock].push(expectedReturn);
     });
 }
+
 
 let cumulativeReturns = []; // To store cumulative returns for each year
 
@@ -218,8 +264,7 @@ function calculateCumulativeReturns() {
         
         cumulativeReturns.push(cumulativeReturnForYear);
     }
-    
-    console.log("Cumulative Returns:", cumulativeReturns);
+    // console.log("Cumulative Returns:", cumulativeReturns);
 }
 
 function calculateCashReturns() {
@@ -348,7 +393,6 @@ function initializeCharts() {
 }
 
 function updateChart() {
-    console.log("Cumulative Returns:", cumulativeReturns); // Add this line for debugging
     myChart.data.labels = expectedReturns['Nvidia'].map((_, index) => `Year ${index + 1}`);
     myChart.data.datasets.forEach(dataset => {
         dataset.data = expectedReturns[dataset.label];
