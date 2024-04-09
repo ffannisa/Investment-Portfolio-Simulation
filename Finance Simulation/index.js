@@ -1,3 +1,25 @@
+/// Get news csv file and parse into javascript object
+/// Store news headlines globally
+let newsHeadlines = [];
+
+fetch('News%20Headlines.csv')
+    .then(response => response.text())
+    .then(csvText => {
+        Papa.parse(csvText, {
+            complete: function(results) {
+                newsHeadlines = results.data.map(row => ({
+                    StockCondition: row['StockCondition'],
+                    Stock: row['Stock'],
+                    News: row['News']
+                }));
+                console.log('Parsed news headlines:', newsHeadlines); 
+            },
+            header: true
+        });
+    })
+    .catch(error => console.error('Error fetching the CSV file:', error));
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const inputs = document.querySelectorAll('.percentallocated .input-box');
     inputs.forEach(input => {
