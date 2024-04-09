@@ -129,7 +129,7 @@ function updateMarketConditionDisplay(marketCondition, selectedNews) {
     const marketConditionElement = document.getElementById('marketCondition'); 
     let displayText = marketCondition.condition;
     if (selectedNews) {
-        displayText += `<br>News: ${selectedNews.News}`;
+        displayText += `<br>Check News!`;
     }
     marketConditionElement.innerHTML = displayText;
 }
@@ -268,35 +268,84 @@ function calculateCumulativeReturns() {
 }
 
 function calculateCashReturns() {
-    // const cashAllocationPercentage = parseFloat(document.querySelector('input[name="cash-allocated"]').value) / 100 || 0;
-    const previousCashBalance = parseInt(document.getElementById('currentCashBalance').innerText.replace('$', '').replace(',', ''));
-
     let cashReturns = 0;
     cumulativeReturns.forEach((cumulativeReturn, index) => {
-        const expectedReturnInDollars = cumulativeReturn * previousCashBalance;
+        // Assuming `cumulativeReturn` is a percentage (e.g., 0.05 for 5% return)
+        // and `yearlyCashBalances` contains the starting cash balance for each year,
+        // with the initial balance provided by the user.
+        const startingBalance = index === 0 ? parseFloat(document.getElementById('currentCashBalance').innerText.replace('$', '').replace(',', '')) : yearlyCashBalances[index - 1];
+        const expectedReturnInDollars = cumulativeReturn * startingBalance;
         cashReturns += expectedReturnInDollars;
     });
 
+    console.log("Cash Returns: ", cashReturns);
     return cashReturns;
 }
+
 
 let yearlyCashBalances = [];
 
 function updateCashBalance() {
-    // Dummy implementation - Replace this logic with your actual cash balance update mechanism
     const cashBalanceElement = document.getElementById('currentCashBalance');
-    let currentBalance = parseInt(cashBalanceElement.innerText.replace('$', '').replace(',', ''));
+    let currentBalance = parseFloat(cashBalanceElement.innerText.replace('$', '').replace(',', '').replace(/,/g, ''));
 
     // Calculate cash returns
     const cashReturns = calculateCashReturns();
 
-    // Update cash balance
-    const newBalance = currentBalance + cashReturns;
+    // Update cash balance - Corrected to add the returns to the last element of `yearlyCashBalances` if it exists
+    let newBalance = currentBalance + cashReturns;
+    if (yearlyCashBalances.length > 0) {
+        newBalance = yearlyCashBalances[yearlyCashBalances.length - 1] + cashReturns;
+    }
     yearlyCashBalances.push(newBalance); 
     cashBalanceElement.innerText = `$${newBalance.toLocaleString()}`;
 
-    updateChart();
+    console.log("Updated Cash Balance: ", newBalance);
+    // Trigger animations based on the cash return value
+    if (cashReturns > 0) {
+        animateMoney(cashBalanceElement);
+    } else if (cashReturns < 0) {
+        animateNegativeReturn(cashBalanceElement);
+    }
+}
 
+
+function animateMoney(targetElement) {
+    const moneyAnimationElement = document.createElement('div');
+    moneyAnimationElement.innerText = '💸';
+    moneyAnimationElement.classList.add('money-animation');
+
+    // Positioning and styling
+    const rect = targetElement.getBoundingClientRect();
+    moneyAnimationElement.style.position = 'absolute';
+    moneyAnimationElement.style.left = `${rect.left + rect.width / 2}px`; // Corrected template literal
+    moneyAnimationElement.style.top = `${rect.top - 20}px`; // Corrected template literal
+
+    document.body.appendChild(moneyAnimationElement);
+
+    // Animation cleanup
+    moneyAnimationElement.addEventListener('animationend', function() {
+        moneyAnimationElement.remove();
+    });
+}
+
+function animateNegativeReturn(targetElement) {
+    const negativeAnimationElement = document.createElement('div');
+    negativeAnimationElement.innerText = '🔻';
+    negativeAnimationElement.classList.add('negative-return-animation');
+
+    // Positioning and styling
+    const rect = targetElement.getBoundingClientRect();
+    negativeAnimationElement.style.position = 'absolute';
+    negativeAnimationElement.style.left = `${rect.left + rect.width / 2}px`; // Corrected template literal
+    negativeAnimationElement.style.top = `${rect.top}px`; // Corrected template literal
+
+    document.body.appendChild(negativeAnimationElement);
+
+    // Animation cleanup
+    negativeAnimationElement.addEventListener('animationend', function() {
+        negativeAnimationElement.remove();
+    });
 }
 
 let sp500CumulativeReturns = [];
