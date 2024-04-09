@@ -1,0 +1,16 @@
+﻿StockCondition,Stock,News
+Bull,Nvidia,"Nvidia's Latest AI Chip Revolutionizes the Tech Industry, Stock Prices Soar to Record Highs"
+Neutral,Nvidia,"Nvidia Maintains Steady Growth Amidst Global Chip Shortage, Meets Quarterly Expectations"
+Bear,Nvidia,"Nvidia Faces Unprecedented Decline in Demand as Global Tech Slump Intensifies, Shares Tumble"
+Bull,Coca cola,"Coca Cola Strikes Gold with New Health-Conscious Beverage Line, Shares Hit All-Time High"
+Neutral,Coca cola,"Coca Cola Continues to Show Resilience in Volatile Market, Performance Aligned with Industry Averages"
+Bear,Coca cola,"Coca Cola Warns of Falling Profit Margins as Sugar Tax Hits Global Markets, Investors Wary"
+Bull,S&P 500 ETF,"S&P 500 Reaches New Heights as Economic Recovery Accelerates, Investor Confidence Peaks"
+Neutral,S&P 500 ETF,"S&P 500 Shows Modest Gains Amidst Economic Uncertainty, Markets Await Clear Direction"
+Bear,S&P 500 ETF,"S&P 500 Plummets in Worst Sell-Off Since 2008, Fears of Recession Loom Large"
+Bull,T Bond,"Investors Flock to 10-Year U.S. Treasury Bonds Amidst Global Economic Uncertainty, Yields Hit Record Lows"
+Bear,T Bond,10-Year U.S. Treasury Bonds Hold Steady as Investors Weigh Economic Indicators
+Neutral,T Bond,Yields on 10-Year U.S. Treasury Bonds Surge as Inflation Fears Spur Sell-Off
+Bull,Bitcoin,"Bitcoin Shatters Expectations, Surges Past $100,000 as Institutional Investors Embrace Cryptocurrency"
+Bear,Bitcoin,"Bitcoin Stabilizes Around $50,000 Mark as Market Seeks Direction Amidst Regulatory Talks"
+Neutral,Bitcoin,"Bitcoin Plunges Below $20,000 in Crypto Winter, Market Sentiment Hits New Low"
