@@ -224,6 +224,7 @@ function normalRandom() {
     return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
 }
 
+
 function calculateExpectedReturns(M, selectedNews) {
     const stockRate = selectedNews ? calculateStockRate(selectedNews.StockCondition) : 0;
     Object.keys(stockParameters).forEach(stock => {
@@ -233,9 +234,9 @@ function calculateExpectedReturns(M, selectedNews) {
         if (selectedNews && selectedNews.Stock === stock) {
             modifiedM += stockRate; // Modify M based on the stock condition from the news
         }
-        const expectedReturn = alpha + beta * (0.01 * modifiedM) + randomComponent;
+        let expectedReturn = alpha + beta * (0.01 * modifiedM) + randomComponent;
 
-        // Check if the expected return is less than -2, change it to -0.99
+        // Cap the expected return at -0.99 if it's less than -0.99
         if (expectedReturn < -0.99) {
             expectedReturn = -0.99;
         }
