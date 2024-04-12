@@ -100,6 +100,11 @@ function generateMarketCondition() {
 let usedNewsIndices = new Set(); // Tracks indices of newsHeadlines that have been used
 
 function SelectionNews(year) {
+    // If all news headlines have been used, return null; this is because of error year stop at 31
+    if (usedNewsIndices.size >= newsHeadlines.length) {
+        return null;
+    }
+
     if (year % 2 === 0) { // Every even year
         let randomIndex;
         do {
@@ -109,8 +114,9 @@ function SelectionNews(year) {
         usedNewsIndices.add(randomIndex);
         return newsHeadlines[randomIndex];
     }
-    return null; // No news for odd years
+    return null; // No news for odd years or if all news have been used
 }
+
 
 function calculateStockRate(stockCondition) {
     switch(stockCondition) {
@@ -208,6 +214,7 @@ function updateMarketConditionAndModal(year) {
     const selectedNews = SelectionNews(year);
     const M = Math.random(); // Reuse this value for expected return calculations
     calculateExpectedReturns(M, selectedNews);
+    updateStockDisplay();
     calculateCumulativeReturns(); // Calculate cumulative returns
     calculateSP500Returns();
     updateMarketConditionDisplay(marketCondition, selectedNews);
@@ -308,6 +315,35 @@ function updateCashBalance() {
     } else if (cashReturns < 0) {
         animateNegativeReturn(cashBalanceElement);
     }
+}
+
+function updateStockDisplay() {
+    const assetContainer = document.querySelector('.asset');
+    assetContainer.innerHTML = ''; // Clear existing entries
+
+    Object.keys(expectedReturns).forEach(stock => {
+        const returnsArray = expectedReturns[stock];
+        let sign = '';
+        let color = 'black'; // Default color if there's no change or only one entry
+
+        // Ensure there are at least 2 entries to compare
+        if (returnsArray.length >= 2) {
+            const lastReturn = returnsArray[returnsArray.length - 1];
+            const secondLastReturn = returnsArray[returnsArray.length - 2];
+            if (lastReturn > secondLastReturn) {
+                sign = '▲';
+                color = 'green';
+            } else if (lastReturn < secondLastReturn) {
+                sign = '▼';
+                color = 'red';
+            }
+        }
+
+        const stockElement = document.createElement('div');
+        stockElement.innerHTML = `${stock} ${sign}`;
+        stockElement.style.color = color;
+        assetContainer.appendChild(stockElement);
+    });
 }
 
 
