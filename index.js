@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCharts(); // Call this function to initialize the chart on document load
 });
 
-/// Functin for Reset button, reload webpage
+/// Functin for Reset button, to reload webpage back to initial stage
 function resetPage() {
     window.location.reload();
 }
