@@ -303,8 +303,7 @@ function calculateCashReturns() {
     return cashReturns;
 }
 
-
-let yearlyCashBalances = [];
+let yearlyCashBalances = [100000]; // Start with $100,000 at Year 0
 
 function updateCashBalance() {
     const cashBalanceElement = document.getElementById('currentCashBalance');
@@ -320,6 +319,7 @@ function updateCashBalance() {
     }
     yearlyCashBalances.push(newBalance); 
     cashBalanceElement.innerText = `$${newBalance.toLocaleString()}`;
+    updateChart();  // Update the chart immediately after modifying the data
 
     console.log("Updated Cash Balance: ", newBalance);
     // Trigger animations based on the cash return value
@@ -505,7 +505,7 @@ function updateChart() {
     console.log("S&P 500 Cumulative Returns:", sp500CumulativeReturns);
     mySecondChart.update();
 
-    myThirdChart.data.labels = yearlyCashBalances.map((_, index) => `Year ${index + 1}`);
+    myThirdChart.data.labels = yearlyCashBalances.map((_, index) => `Year ${index}`);
     myThirdChart.data.datasets[0].data = yearlyCashBalances;
     myThirdChart.update();
 }
