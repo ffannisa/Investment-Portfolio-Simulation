@@ -428,8 +428,18 @@ function initializeCharts() {
         },
         options: {
             scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Years'
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Expected Returns'
+                    }
                 }
             }
         }
@@ -460,8 +470,18 @@ function initializeCharts() {
         },
         options: {
             scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Years'
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cumulative Returns'
+                    }
                 }
             }
         }
@@ -483,8 +503,18 @@ function initializeCharts() {
         },
         options: {
             scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Years'
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cash Balance ($)'
+                    }
                 }
             }
         }
