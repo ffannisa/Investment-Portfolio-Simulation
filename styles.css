@@ -213,6 +213,18 @@ body {
     cursor: pointer;
 }
 
+.reset-button {
+    display: block;
+    width: 100px;
+    margin: 20px auto 0;
+    padding: 10px;
+    font-size: 1.3rem; /* Adjust font size if needed */
+    background: #cc2e3e;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
 .input-section, .graph-section {
     display: inline-block;
     vertical-align: top;
