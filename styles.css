@@ -312,6 +312,21 @@ body {
     height: 200px;
   }
   
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem; /* Adds space between the title and the details */
+}
+
+.profile-details p {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
 
 @keyframes moneyFlyAnimation {
     0% { transform: translateY(20px) scale(1); opacity: 0; }

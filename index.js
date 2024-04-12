@@ -153,39 +153,46 @@ function updateModalText(marketCondition, selectedNews) {
     document.getElementById('modalText').innerHTML = `<p>${text}</p>`;
 }
 
-
-/// function for percent allocation min-max range based on profile selection
+// Function to update the display of profile information and input ranges based on risk preference
 function adjustInputRangesBasedOnRisk() {
     const urlParams = new URLSearchParams(window.location.search);
     const riskPreference = urlParams.get('risk');
-    
+
     const highRiskRanges = [
-        { min: 5, max: 35 }, // Nvidia
-        { min: 5, max: 35 }, // Coca cola
-        { min: 20, max: 40 }, // T Bond
-        { min: 5, max: 35 }, // S&P 500 ETF
-        { min: 5, max: 15 } // Bitcoin
+        { asset: 'Nvidia', min: 5, max: 35 },
+        { asset: 'Coca cola', min: 5, max: 35 },
+        { asset: 'T Bond', min: 20, max: 40 },
+        { asset: 'S&P 500 ETF', min: 5, max: 35 },
+        { asset: 'Bitcoin', min: 5, max: 15 }
     ];
 
     const lowRiskRanges = [
-        { min: 0, max: 20 }, // Nvidia
-        { min: 5, max: 20 }, // Coca cola
-        { min: 40, max: 90 }, // T Bond
-        { min: 0, max: 20 }, // S&P 500 ETF
-        { min: 0, max: 5 } // Bitcoin
+        { asset: 'Nvidia', min: 0, max: 20 },
+        { asset: 'Coca cola', min: 5, max: 20 },
+        { asset: 'T Bond', min: 40, max: 90 },
+        { asset: 'S&P 500 ETF', min: 0, max: 20 },
+        { asset: 'Bitcoin', min: 0, max: 5 }
     ];
 
+    const profileInfo = document.querySelector('.profile-details');
+    profileInfo.innerHTML = ''; // Clear previous details
+
+    const profileTitle = document.querySelector('.profile-title');
     const inputs = document.querySelectorAll('.percentallocated .input-box');
     
     if (riskPreference === 'high') {
-        inputs.forEach((input, index) => {
-            input.min = highRiskRanges[index].min;
-            input.max = highRiskRanges[index].max;
+        profileTitle.textContent = 'You have chosen: High-Risk';
+        highRiskRanges.forEach((range, index) => {
+            profileInfo.innerHTML += `<p>${range.asset}: ${range.min}% to ${range.max}%</p>`;
+            inputs[index].min = range.min;
+            inputs[index].max = range.max;
         });
     } else if (riskPreference === 'low') {
-        inputs.forEach((input, index) => {
-            input.min = lowRiskRanges[index].min;
-            input.max = lowRiskRanges[index].max;
+        profileTitle.textContent = 'You have chosen: Risk Averse';
+        lowRiskRanges.forEach((range, index) => {
+            profileInfo.innerHTML += `<p>${range.asset}: ${range.min}% to ${range.max}%</p>`;
+            inputs[index].min = range.min;
+            inputs[index].max = range.max;
         });
     }
 }
