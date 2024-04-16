@@ -16,4 +16,5 @@ allocation strategies. This project is also extremely useful for the wealth mana
 the simulation provides insightful results into the differences in returns generated upon 
 employing different strategies of asset allocation.
 
-[![Video Title](http://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://youtu.be/PzcqgbYQ4fo "Project Video")
+[![Project Video](http://img.youtube.com/vi/PzcqgbYQ4fo/0.jpg)](https://youtu.be/PzcqgbYQ4fo "Project Video")
+
