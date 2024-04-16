@@ -17,10 +17,11 @@ the simulation provides insightful results into the differences in returns gener
 employing different strategies of asset allocation.
 
 ## Simulation Design
-<img src="https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0002.jpg" width="500">
-![](https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0002.jpg)
-![](https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0007.jpg)
-![](https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0008.jpg)
+<div align="center">
+<img src="https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0002.jpg" width="700">
+<img src="https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0007.jpg" width="700">
+<img src="https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0008.jpg" width="700">
+</div>
 
 #### Click to view out Project Video!
 [![Project Video](http://img.youtube.com/vi/PzcqgbYQ4fo/maxresdefault.jpg)](https://youtu.be/PzcqgbYQ4fo "Project Video")
