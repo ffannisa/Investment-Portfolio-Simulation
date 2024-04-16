@@ -16,6 +16,11 @@ allocation strategies. This project is also extremely useful for the wealth mana
 the simulation provides insightful results into the differences in returns generated upon 
 employing different strategies of asset allocation.
 
+## Simulation Design
+![](https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0002.jpg)
+![](https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0007.jpg)
+![](https://github.com/ffannisa/Investment-Portfolio-Simulation/blob/master/images/Simulation%20Design_page-0008.jpg)
+
 #### Click to view out Project Video!
 [![Project Video](http://img.youtube.com/vi/PzcqgbYQ4fo/maxresdefault.jpg)](https://youtu.be/PzcqgbYQ4fo "Project Video")
 
